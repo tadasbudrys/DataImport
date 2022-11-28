@@ -1,0 +1,12 @@
+{% extends '@PrestaShop/Admin/layout.html.twig' %}
+
+{% block content %}
+    <h1> Select witch data will be imported. </h1>
+    {{ form_start(form, {'action': path('fake_data_create'), 'method': 'POSt'}) }}
+    <div class="form-group">
+        {{ form_widget(form) }}
+    </div>
+    <button type="submit" class="btn btn-primary"/>Save </button>
+    {{ form_end(form) }}
+{% endblock %}
+

@@ -1,0 +1,64 @@
+# https://devdocs.prestashop.com/8/modules/concepts/services/
+services:
+#    PrestaShop\Module\DemoProductForm\Form\Modifier\ProductFormModifier:
+#        class: PrestaShop\Module\DemoProductForm\Form\Modifier\ProductFormModifier
+#        public: true
+#        arguments:
+#            - '@translator'
+#            - '@form.form_builder_modifier'
+
+    prestashop.module.demo_multistore.form.identifiable_object.data_provider.content_block_form_data_provider:
+        class: 'PrestaShop\Module\DataImport\Form\DataProvider\ImportDataFormProvider'
+        arguments:
+        - '@doctrine.orm.default_entity_manager'
+        - '@prestashop.adapter.shop.context'
+
+# How use formbuilder without data provider ?
+    prestashop.module.demo_product_form.form.identifiable_object.builder.content_block_form_builder:
+        class: 'PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Builder\FormBuilder'
+        factory: 'prestashop.core.form.builder.form_builder_factory:create'
+        arguments:
+        - 'PrestaShop\Module\DataImport\Form\Type\ImportDataType'
+        - '@prestashop.module.demo_multistore.form.identifiable_object.data_provider.content_block_form_data_provider'
+
+
+#        prestashop.module.demo_product_form.form.import.data.type  not work
+    PrestaShop\Module\DemoProductForm\Form\Type\ImportDataType:
+        class: 'PrestaShop\Module\DataImport\Form\Type\ImportDataType'
+        parent: 'form.type.translatable.aware'
+        public: true
+        arguments:
+            - '@=service("prestashop.adapter.data_provider.currency").getDefaultCurrency()'
+        tags:
+            - { name: form.type }
+
+    prestashop.module.demo_form_product.form.identifiable_object.data_handler.content_block_form_data_handler:
+        class: 'PrestaShop\Module\DataImport\Form\DataProvider\ImportDataFormProvider'
+        arguments:
+        - '@doctrine.orm.default_entity_manager'
+
+    prestashop.module.demoproductform.form.configuration_other_data_configuration:
+        class: PrestaShop\Module\DataImport\Form\Configuration\ConfigurationTextDataConfiguration
+        arguments: [ '@prestashop.adapter.legacy.configuration' ]        
+
+    prestashop.module.demoproductform.form.configuration_other_form_data_provider:
+        class: 'PrestaShop\Module\DataImport\Form\DataProvider\ConfigurationTextFormDataProvider'
+        arguments:
+        - '@prestashop.module.demoproductform.form.configuration_other_data_configuration'
+
+
+    prestashop.module.demoproductform.form.demo_configuration_text_form_data_handler:
+        class: 'PrestaShop\PrestaShop\Core\Form\Handler'
+        arguments:
+        - '@form.factory'
+        - '@prestashop.core.hook.dispatcher'
+        - '@prestashop.module.demoproductform.form.configuration_other_form_data_provider'
+        - 'PrestaShop\Module\DataImport\Form\Type\ConfigurationTextType'
+        - 'DemoProductForm'
+
+    prestashop.module.demosymfonyform.form.type.demo_configuration_text:
+        class: 'PrestaShop\Module\DataImport\Form\Type\ConfigurationTextType'
+        parent: 'form.type.translatable.aware'
+        public: true
+        tags:
+        - { name: form.type }

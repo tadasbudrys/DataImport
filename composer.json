@@ -1,0 +1,21 @@
+{
+  "name": "prestashop/dataimport",
+  "authors": [
+    {
+      "name": "Tadas"
+
+    },
+    {
+      "name": "PrestaShop Core team"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "PrestaShop\\Module\\DataImport\\": "src/"
+    },
+    "config": {
+      "prepend-autoloader": false
+    },
+    "type": "prestashop-module"
+  }
+}

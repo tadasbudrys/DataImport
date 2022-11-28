@@ -1,0 +1,31 @@
+fake_data_generator:
+    path: fake-data-generator/
+    methods: [GET]
+    defaults:
+        _controller: PrestaShop\Module\DataImport\Controller\AdminUserController::indexAction
+        _legacy_controller: AdminUser
+        _legacy_link: AdminUser
+
+fake_data_create:
+    path: fake-data-generator/create
+    methods: [POST]
+    defaults:
+        _controller: PrestaShop\Module\DataImport\Controller\AdminUserController::createAction
+        _legacy_controller: AdminUser
+        _legacy_link: AdminUser
+
+configuration_form:
+  path: fake-data-generator/configuration
+  methods: [GET]
+  defaults:
+        _controller: PrestaShop\Module\DataImport\Controller\ConfigurationController::index
+        _legacy_controller: AdminDemoSymfonyForm
+        _legacy_link: AdminDemoSymfonyForm
+
+configuration_form_create:
+    path: fake-data-generator/configuration/create
+    methods: [POST]
+    defaults:
+        _controller: PrestaShop\Module\DataImport\Controller\ConfigurationController::createAction
+        _legacy_controller: AdminDemoSymfonyForm
+        _legacy_link: AdminDemoSymfonyForm
